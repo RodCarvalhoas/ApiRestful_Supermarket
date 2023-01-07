@@ -1,17 +1,24 @@
 package com.apirestful.SuperMarket.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.apirestful.SuperMarket.dtos.ProductDto;
 import com.apirestful.SuperMarket.model.Product;
 import com.apirestful.SuperMarket.services.ProductService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/Product")
@@ -31,7 +38,21 @@ public class ProductController {
 		}else {
 			return ResponseEntity.status(HttpStatus.OK).body(productOptional.get());
 		}
-		
+	}
+
+	@GetMapping
+	public ResponseEntity<List<Product>> getAllProducts(){
+		return ResponseEntity.status(HttpStatus.OK).body(productService.getAllProducts());
+	}
+	
+	@PostMapping
+	public ResponseEntity<Object> saveProduct(@RequestBody @Valid ProductDto productDto){
+		if(productService.existsByProductName(productDto.getProductName())) {//Se o nome do produto já existir, retorna conflito
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: Product name is already in use!");
+		}
+		Product product = new Product();
+		BeanUtils.copyProperties(productDto, product);
+		return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(product));
 	}
 	
 }

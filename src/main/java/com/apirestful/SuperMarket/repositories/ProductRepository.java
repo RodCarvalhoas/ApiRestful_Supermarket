@@ -10,4 +10,5 @@ import com.apirestful.SuperMarket.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
+	boolean existsByProductName(String ProductName);
 }

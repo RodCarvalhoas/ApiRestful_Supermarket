@@ -24,6 +24,7 @@ public class Product implements Serializable{
 	private String productName;
 	@Column(nullable = false)
 	private Double productValue;
+	
 	public UUID getProductId() {
 		return productId;
 	}
