@@ -33,6 +33,11 @@ public class ProductService {
 		return productRepository.save(product);
 	}
 	
+	@Transactional
+	public void deleteProduct(UUID id) {
+		productRepository.deleteById(id);
+	}
+	
 	public boolean existsByProductName(String ProductName) {//Método p/ saber se já existe o nome
         return productRepository.existsByProductName(ProductName);
     }
