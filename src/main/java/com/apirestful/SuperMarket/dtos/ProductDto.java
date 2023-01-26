@@ -5,19 +5,10 @@ import io.micrometer.common.lang.Nullable;
 public class ProductDto {
 
 	@Nullable
-	private String productGroup;
-	@Nullable
 	private String productName;
 	@Nullable
 	private Double productValue;
-
-	public String getProductGroup() {
-		return productGroup;
-	}
-
-	public void setProductGroup(String productGroup) {
-		this.productGroup = productGroup;
-	}
+	
 
 	public String getProductName() {
 		return productName;
@@ -34,5 +25,4 @@ public class ProductDto {
 	public void setProductValue(Double productValue) {
 		this.productValue = productValue;
 	}
-
 }
